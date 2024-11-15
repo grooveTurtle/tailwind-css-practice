@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind CSS 다크 모드 실습</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Tailwind 설정에서 다크 모드를 selector로 설정
+      tailwind.config = {
+        // darkMode: 'media', // 운영 체제의 모드에 맞게 설정
+        darkMode: 'selector', // 수동으로 설정
+      };
+    </script>
+  </head>
+  <body
+    class="bg-white text-black min-h-screen flex items-center justify-center dark:bg-gray-900"
+  >
+    <div class="text-center">
+      <h1 class="text-4xl font-bold mb-4 dark:text-white">
+        Tailwind CSS 다크 모드
+      </h1>
+      <p class="mb-6 dark:text-white">이 페이지는 다크 모드를 지원합니다.</p>
+      <button
+        id="change-dark-mode"
+        class="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        다크 모드 전환
+      </button>
+      <div class="mt-6 bg-white p-6 rounded-lg shadow-lg dark:bg-gray-700">
+        <p class="dark:text-white">
+          이 박스는 다크 모드에서 배경이 어두운 색으로 변합니다.
+        </p>
+      </div>
+    </div>
+    <script type="text/javascript">
+      const html = document.querySelector('html');
+      const button = document.getElementById('change-dark-mode');
+      let pageTheme = localStorage.getItem('theme');
+
+      console.log('localStorage.theme:::', localStorage.theme);
+
+      const darkModeCheck = () => {
+        if (pageTheme === 'dark') {
+          html.classList.add('dark');
+        }
+      };
+
+      darkModeCheck();
+
+      button.addEventListener('click', () => {
+        if (pageTheme === 'dark') {
+          html.classList.remove('dark');
+          localStorage.removeItem('theme');
+          pageTheme = '';
+        } else {
+          html.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+          pageTheme = 'dark';
+        }
+      });
+    </script>
+  </body>
+</html>
